@@ -1,0 +1,28 @@
+<div layout="row" layout-padding style="height: 100vh;" layout-align="center center">
+    <div flex-gt-sm="50" flex="100">
+        <md-whiteframe class="md-whiteframe-1dp">
+            <h1>Login</h1>
+            <p>
+                You will be logged in for two weeks.
+            </p>
+            <div layout="row" layout-wrap>
+                <md-input-container flex="100">
+                    <label for="Email">Email</label>
+                    <input id="Email" type="Email" ng-model="Login.email">
+                </md-input-container>
+                <md-input-container flex="100">
+                    <label for="Password">Password</label>
+                    <input id="Password" type="Password" ng-model="Login.password">
+                </md-input-container>
+                <md-input-container flex="100" layout="row">
+                    <md-button flex="100" ng-click="Login.login()">Login</md-button>
+                </md-input-container>
+                <div flex="100">
+                    <p style="color: darkred;">
+                        {{ Login.error }}
+                    </p>
+                </div>
+            </div>
+        </md-whiteframe>
+    </div>
+</div>

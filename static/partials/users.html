@@ -1,0 +1,31 @@
+<div layout="row" layout-wrap layout-padding>
+    <div flex="100" flex-gt-sm="70" flex-offset-gt-sm="15">
+        <button class="md-button" ng-click="App.goto('/users/new')">New User
+        </button>
+    </div>
+    <md-whiteframe class="md-whiteframe-1dp" ng-repeat="user in Users.list"
+                   flex="100" flex-gt-sm="70" flex-offset-gt-sm="15" style="margin-bottom: 1em;">
+        <div layout="row" layout-wrap layout-padding>
+            <div flex>
+                <h4 ng-click="App.goto('/users/u/' + user.id)"
+                    style="cursor: pointer;">
+                    {{ user.name }}
+                </h4>
+
+                <h5>Email</h5>
+                <a href="mailto:{{ user.email }}">{{ user.email }}</a>
+            </div>
+            <div>
+                <h5>ID</h5>
+                <code>
+                    {{ user.id }}
+                </code>
+
+                <h5>Level</h5>
+                <p>
+                    {{ user.level }}
+                </p>
+            </div>
+        </div>
+    </md-whiteframe>
+</div>

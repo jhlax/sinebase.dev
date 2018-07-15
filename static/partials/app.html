@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="sinebase_app" ng-controller="app_ctl as App">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="/static/css/angular-material.min.css">
+
+    <title>~b{{ App.title }}</title>
+</head>
+<body>
+
+<div layout="row" layout-wrap flex="100"
+     ng-show="App.site.is_logged_in()" layout-padding="">
+    <div flex="100" flex-gt-sm="50">
+        <h1>
+            <span ng-click="App.goto('/')"
+                  style="cursor: pointer;">sinebase</span>
+        </h1>
+    </div>
+    <div flex="100" flex-gt-sm="50">
+        <p style="padding-top: .5em; text-align: right;">
+            Logged in as <b>{{ App.site.get_user().name }}</b>.
+            <a href="#" ng-click="App.logout()" class="md-button">
+                Logout
+            </a>
+        </p>
+    </div>
+</div>
+<div layout="row" layout-wrap flex="100" flex-gt-sm="70" flex-offset-gt-sm="15"
+     ng-show="App.site.is_logged_in()" layout-padding>
+    <div>
+        <button class="md-button" ng-click="App.goto('/')">
+            Home
+        </button>
+
+        <button class="md-button" ng-click="App.goto('/users')"
+                ng-show="App.site.get_user().level === 'super'">
+            Users
+        </button>
+
+        <button class="md-button" ng-click="App.goto('/whitepaper')">
+            Whitepaper
+        </button>
+    </div>
+</div>
+
+<div class="site_container" ng-view>
+
+</div>
+
+<script src="/static/js/sha256.min.js"></script>
+<script src="/static/js/angular.min.js"></script>
+<script src="/static/js/angular-animate.min.js"></script>
+<script src="/static/js/angular-aria.min.js"></script>
+<script src="/static/js/angular-messages.min.js"></script>
+<script src="/static/js/angular-material.min.js"></script>
+<script src="/static/js/angular-route.min.js"></script>
+<script src="/static/js/ngStorage.min.js"></script>
+<!--<script src="/static/js/angular-ui-router.min.js"></script>-->
+
+<script src="/static/js/app.js"></script>
+</body>
+</html>
