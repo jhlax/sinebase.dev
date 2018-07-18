@@ -1,5 +1,6 @@
 .app-toolbar {
     position: sticky;
+    position: -webkit-sticky;
     top: 0;
     right: 0;
     left: 0;

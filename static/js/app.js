@@ -330,6 +330,7 @@ app.controller('user_ctl', ['Site', 'REST', '$routeParams', '$location',
                 data = res.data;
                 if (data.result === 'success') {
                     User.data = data.data;
+                    Site.app_ctl.title = ': ' + User.data.name;
                 } else {
                     User.error = data.message;
                 }

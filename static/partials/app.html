@@ -8,6 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <link rel="stylesheet" href="/static/css/angular-material.min.css">
+    <link rel="stylesheet" href="/static/css/md-data-table.min.css">
     <link rel="stylesheet" href="/static/css/site.css">
 
     <title>~b{{ App.title }}</title>
@@ -15,9 +16,9 @@
 <body>
 <div class="app-container">
     <md-toolbar ng-show="App.site.is_logged_in()" class="app-toolbar">
-        <div class="md-toolbar-tools">
+        <nav class="md-toolbar-tools">
             <md-button aria-label="Go Back" ng-click="App.goto('/')"
-                       style="cursor: pointer;">
+                       style="cursor: pointer;" class="md-primary md-raised md-hue-2">
                 {{ App.name }}
             </md-button>
 
@@ -32,16 +33,16 @@
             <span flex=""></span>
 
             <span md-truncate="" class="md-subhead">Logged in as <b>{{ App.site.get_user().name }}</b>.</span>
-            <md-button class="md-raised md-accent md-hue-3"
+            <md-button class="md-raised md-accent md-hue-1"
                        aria-label="Log Out" ng-click="App.logout()">
                 Logout
             </md-button>
-        </div>
+        </nav>
     </md-toolbar>
 
-    <div class="site_container" ng-view>
+    <main class="site_container" ng-view>
 
-    </div>
+    </main>
 </div>
 
 <script src="/static/js/sha256.min.js"></script>
@@ -52,6 +53,7 @@
 <script src="/static/js/angular-material.min.js"></script>
 <script src="/static/js/angular-route.min.js"></script>
 <script src="/static/js/ngStorage.min.js"></script>
+<script src="/static/js/md-data-table.min.js"></script>
 <!--<script src="/static/js/angular-ui-router.min.js"></script>-->
 
 <script src="/static/js/app.js"></script>
