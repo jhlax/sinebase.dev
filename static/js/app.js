@@ -1,6 +1,12 @@
 const app = angular.module('sinebase_app', ['ngMaterial', 'ngMessages', 'ngRoute',
     'ngStorage']);
 
+app.config(function ($mdThemingProvider) {
+    $mdThemingProvider.theme('default')
+        .primaryPalette('blue')
+        .accentPalette('blue-grey');
+});
+
 
 app.config(['$httpProvider', function ($httpProvider) {
     if (!$httpProvider.defaults.headers.get) {
@@ -116,28 +122,29 @@ app.controller('app_ctl', ['Site', 'REST', '$location', '$localStorage', functio
     /*
     Site-wide controller
      */
-    let Sinebase = this;
-    Sinebase.site = Site;
+    let App = this;
+    App.site = Site;
+    App.name = 'sinebase';
 
-    Sinebase.title = '';
-    Sinebase.track = {
+    App.title = '';
+    App.track = {
         'bpm': 128,
         'key': 'C',
         'scale': 'major'
     };
 
-    Sinebase.logout = function () {
+    App.logout = function () {
         REST.delete('/api/auth').then(function (res) {
             $localStorage.$reset();
             $location.path('/login');
         });
     };
 
-    Sinebase.goto = function (page) {
+    App.goto = function (page) {
         $location.path(page);
     };
 
-    Sinebase.init = function () {
+    App.init = function () {
         REST.get('/api/auth').then(function (res) {
             data = res.data;
             if (data.result === 'success') {
@@ -146,13 +153,13 @@ app.controller('app_ctl', ['Site', 'REST', '$location', '$localStorage', functio
                 Site.set_user(data.data.user);
             } else {
                 console.log('Validation unsuccessful.\n' + JSON.stringify(res));
-                Sinebase.logout();
+                App.logout();
             }
         });
-        Site.app_ctl = Sinebase;
+        Site.app_ctl = App;
     };
 
-    Sinebase.init();
+    App.init();
 }]);
 
 app.controller('home_ctl', ['Site', 'REST', function (Site, REST) {
