@@ -4,7 +4,7 @@
     <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="8">
+          <list size="11">
             <item index="0" class="java.lang.String" itemvalue="ng-app" />
             <item index="1" class="java.lang.String" itemvalue="layout" />
             <item index="2" class="java.lang.String" itemvalue="layout-padding" />
@@ -13,6 +13,9 @@
             <item index="5" class="java.lang.String" itemvalue="flex-gt-sm" />
             <item index="6" class="java.lang.String" itemvalue="flex-offset" />
             <item index="7" class="java.lang.String" itemvalue="layout-align" />
+            <item index="8" class="java.lang.String" itemvalue="ng-placeholder" />
+            <item index="9" class="java.lang.String" itemvalue="md-placeholder" />
+            <item index="10" class="java.lang.String" itemvalue="layout-margin" />
           </list>
         </value>
       </option>

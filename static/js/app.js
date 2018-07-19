@@ -124,7 +124,7 @@ app.controller('app_ctl', ['Site', 'REST', '$location', '$localStorage', functio
      */
     let App = this;
     App.site = Site;
-    App.name = 'sinebase';
+    App.name = 'TBG CTS';
 
     App.title = '';
     App.track = {

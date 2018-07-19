@@ -1,7 +1,60 @@
-<div layout="row">
-    <div flex="100" flex-gt-sm="70" flex-offset-gt-sm="15">
+<!--<div layout="row">-->
+<!--<div flex="100" flex-gt-sm="70" flex-offset-gt-sm="15">-->
+<!--<div layout="row" layout-wrap="" layout-margin="">-->
+<!--<div flex="100" flex-gt-sm="30">-->
+<!--&lt;!&ndash;<h4>Cases</h4>&ndash;&gt;-->
+<!--<div layout="row" layout-padding="" layout-wrap="">-->
+<!--<div flex-gt-sm="50" flex="100">-->
+<!--<h6>Active Cases</h6>-->
+<!--<md-input-container>-->
+<!--<label for="ActiveCases">Active Cases</label>-->
+<!--<input type="text" ng-model="Home.cases.active"-->
+<!--id="ActiveCases" disabled>-->
+<!--</md-input-container>-->
+<!--</div>-->
+<!--<div flex-gt-sm="50" flex="100">-->
+<!--<h6>Pending Cases</h6>-->
+<!--<md-input-container>-->
+<!--<label for="Pending">Pending Cases</label>-->
+<!--<input type="text" ng-model="Home.cases.pending"-->
+<!--id="PendingCases" disabled>-->
+<!--</md-input-container>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div flex="100" flex-gt-sm="40">-->
+<!--&lt;!&ndash;<h4>Timespan</h4>&ndash;&gt;-->
+<!--<div layout="row" layout-wrap="" layout-padding="">-->
+<!--<div flex="100" flex-gt-sm="50">-->
+<!--<h6>Start Date</h6>-->
+<!--<md-datepicker-->
+<!--ng-model="Home.start_date"-->
+<!--md-placeholder="Start Date"></md-datepicker>-->
+<!--</div>-->
+<!--<div flex="100" flex-gt-sm="50">-->
+<!--<h6>End Date</h6>-->
+<!--<md-datepicker-->
+<!--ng-model="Home.end_date"-->
+<!--md-placeholder="Start Date"></md-datepicker>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div flex="100" flex-gt-sm="30">-->
+
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+<div layout="row" layout-padding="" layout-wrap="">
+    <div flex="100">
+        <h1>Hello, {{ App.site.get_user().name }}.</h1>
         <p>
-            PENIS
+            You have <b>{{ Home.active_cases || 0 }} active case(s)</b> and <b>
+            {{ Home.pending_cases || 0 }} pending case(s)</b>.
+        </p>
+        <p>
+            
         </p>
     </div>
 </div>
