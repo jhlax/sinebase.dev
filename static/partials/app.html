@@ -22,14 +22,14 @@
                 {{ App.name }}
             </md-button>
 
-            <button class="md-button" ng-click="App.goto('/users')"
+            <md-button ng-click="App.goto('/users')"
                     ng-show="App.site.get_user().level === 'super'">
                 Users
-            </button>
+            </md-button>
 
-            <button class="md-button" ng-click="App.goto('/whitepaper')">
+            <md-button ng-click="App.goto('/whitepaper')">
                 Whitepaper
-            </button>
+            </md-button>
             <span flex=""></span>
 
             <span md-truncate="" class="md-subhead">Logged in as <b>{{ App.site.get_user().name }}</b>.</span>
