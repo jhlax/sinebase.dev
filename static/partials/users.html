@@ -1,12 +1,15 @@
 <div layout="row" layout-wrap>
     <md-whiteframe class="md-whiteframe-2dp " flex="100" flex-gt-sm="70" flex-offset-gt-sm="15">
-        <div layout-padding="">
+        <md-content layout-padding="">
             <h1>Users</h1>
-            <div>
-                <md-button class="md-raised md-primary" ng-click="App.goto('/users/new')">New User
-                </md-button>
-            </div>
-        </div>
+            <!--<div>-->
+                <!--<md-button class="md-raised md-primary" ng-click="App.goto('/users/new')">New User-->
+                <!--</md-button>-->
+            <!--</div>-->
+            <p>
+                <b>{{ Users.list.length || 0 }} users</b> found. <a href="#" ng-click="App.goto('/users/new')" class="md-button md-raised md-primary">New User</a>
+            </p>
+        </md-content>
     </md-whiteframe>
 
     <div flex="100">&nbsp</div>
