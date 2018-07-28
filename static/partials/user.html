@@ -1,64 +1,65 @@
-<div layout="row" layout-padding="" layout-wrap="">
+<div layout="row" layout-wrap="">
     <div flex="100" flex-gt-sm="70" flex-offset-gt-sm="15">
-        <md-whiteframe class="md-whiteframe-2dp" layout="row" layout-padding=""
+        <md-whiteframe class="md-whiteframe-2dp" layout="row"
                        layout-wrap="">
             <div flex="100" ng-show="User.action === 'update' && User.is_edit">
-                <button class="md-button" ng-click="User.edit()">Edit</button>
-                <button class="md-button" ng-click="User.exit()"
-                        style="float: right;">
+                <md-button ng-click="User.exit()">
                     Cancel
-                </button>
-                <button class="md-button md-warn" ng-click="User.delete()"
+                </md-button>
+                <md-button class="md-primary md-raised" ng-click="User.edit()">Edit</md-button>
+                <md-button class="md-warn" ng-click="User.delete()"
                         style="float: right;">
                     Delete
-                </button>
+                </md-button>
             </div>
             <div flex="100" ng-show="!User.is_edit">
-                <button class="md-button md-warn" ng-click="User.cancel()">
+                <md-button class="" ng-click="User.cancel()">
                     Cancel
-                </button>
-                <button class="md-button" ng-click="User.save()"
-                        style="float: right;">Save</button>
+                </md-button>
+                <md-button ng-click="User.save()" class="md-raised md-primary"
+                        style="float: right;">Save</md-button>
             </div>
-            <div flex="100" layout="row" layout-wrap="">
-                <md-input-container flex="100" flex-gt-sm="50">
-                    <label for="Name">Name</label>
-                    <input id="Name" type="text" ng-model="User.data.name"
-                           required ng-disabled="User.is_edit">
-                </md-input-container>
-                <md-input-container flex="100" flex-gt-sm="50">
-                    <label for="Email">Email</label>
-                    <input id="Email" type="email" ng-model="User.data.email"
-                           required ng-disabled="User.is_edit">
-                </md-input-container>
-                <md-input-container flex="100" flex-gt-sm="50">
-                    <label for="Level">Level</label>
-                    <md-select id="level" ng-model="User.data.level"
-                               ng-disabled="User.is_edit" required>
-                        <md-option ng-repeat="level in User.levels"
-                                   ng-value="level">
-                            {{ level }}
-                        </md-option>
-                    </md-select>
-                </md-input-container>
-                <md-input-container flex="100" flex-gt-sm="25"
-                                    ng-show="User.action === 'new' || User.is_change_password">
-                    <label for="Password">Password</label>
-                    <input type="password" id="Password"
-                           ng-model="User.password" required>
-                </md-input-container>
-                <md-input-container flex="100" flex-gt-sm="25"
-                                    ng-show="User.action === 'new' || User.is_change_password">
-                    <label for="Password1">Confirm Password</label>
-                    <input type="password" id="Password1"
-                           ng-model="User.password1" required>
-                </md-input-container>
-                <md-input-container flex="100" flex-gt-sm="50"
-                                    ng-show="User.action === 'update'">
-                    <label for="ID">ID</label>
-                    <input type="text" id="ID" disabled
-                           ng-model="User.data.id">
-                </md-input-container>
+            <div flex="100" layout="row" layout-padding="">
+                <div layout="row" layout-wrap="" flex="100">
+                    <md-input-container flex="100" flex-gt-sm="50">
+                        <label for="Name">Name</label>
+                        <input id="Name" type="text" ng-model="User.data.name"
+                               required ng-disabled="User.is_edit">
+                    </md-input-container>
+                    <md-input-container flex="100" flex-gt-sm="50">
+                        <label for="Email">Email</label>
+                        <input id="Email" type="email" ng-model="User.data.email"
+                               required ng-disabled="User.is_edit">
+                    </md-input-container>
+                    <md-input-container flex="100" flex-gt-sm="50">
+                        <label for="Level">Level</label>
+                        <md-select id="level" ng-model="User.data.level"
+                                   ng-disabled="User.is_edit" required>
+                            <md-option ng-repeat="level in User.levels"
+                                       ng-value="level">
+                                {{ level }}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container flex="100" flex-gt-sm="25"
+                                        ng-show="User.action === 'new' || User.is_change_password">
+                        <label for="Password">Password</label>
+                        <input type="password" id="Password"
+                               ng-model="User.password" required>
+                    </md-input-container>
+                    <md-input-container flex="100" flex-gt-sm="25"
+                                        ng-show="User.action === 'new' || User.is_change_password">
+                        <label for="Password1">Confirm Password</label>
+                        <input type="password" id="Password1"
+                               ng-model="User.password1" required>
+                    </md-input-container>
+                    <md-input-container flex="100" flex-gt-sm="50"
+                                        ng-show="User.action === 'update'">
+                        <label for="ID">ID</label>
+                        <input type="text" id="ID" disabled
+                               ng-model="User.data.id">
+                    </md-input-container>
+                </div>
             </div>
             <div flex="100">
                 <p style="color: red;">

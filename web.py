@@ -8,10 +8,10 @@ app = flask.Flask(config.APP_NAME)
 app.config['DEBUG'] = True
 
 
-@app.route('/', defaults={'path': ''})
+@app.route('/', defaults={ 'path': '' })
 @app.route('/<path:path>')
-def sinebase(path):
-    return app.send_static_file('partials/app.html')
+def sinebase (path):
+	return app.send_static_file('partials/app.html')
 
 
 # noinspection PyTypeChecker
@@ -23,7 +23,10 @@ rest.add_resource(api.Auth, '/api/auth')
 rest.add_resource(api.Users, '/api/users')
 # noinspection PyTypeChecker
 rest.add_resource(api.User, '/api/users/<string:user_id>')
-
+# noinspection PyTypeChecker
+rest.add_resource(api.Cases, '/api/cases')
+# noinspection PyTypeChecker
+rest.add_resource(api.Case, '/api/cases/<string:case_id>')
 
 if __name__ == '__main__':
-    app.run('0.0.0.0')
+	app.run('0.0.0.0')

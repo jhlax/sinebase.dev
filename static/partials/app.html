@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="sinebase_app" ng-controller="app_ctl as App" ng-cloak="">
+<html lang="en" ng-app="sinebase_app" ng-controller="app_ctl as App" ng-cloak>
 
 <head>
     <meta charset="UTF-8">
@@ -33,7 +33,7 @@
             <span flex=""></span>
 
             <span md-truncate="" class="md-subhead">Logged in as <b>{{ App.site.get_user().name }}</b>.</span>
-            <md-button class="md-raised md-accent md-hue-1"
+            <md-button class="md-raised"
                        aria-label="Log Out" ng-click="App.logout()">
                 Logout
             </md-button>

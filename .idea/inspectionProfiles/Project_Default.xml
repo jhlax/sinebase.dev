@@ -4,7 +4,7 @@
     <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="11">
+          <list size="15">
             <item index="0" class="java.lang.String" itemvalue="ng-app" />
             <item index="1" class="java.lang.String" itemvalue="layout" />
             <item index="2" class="java.lang.String" itemvalue="layout-padding" />
@@ -16,6 +16,10 @@
             <item index="8" class="java.lang.String" itemvalue="ng-placeholder" />
             <item index="9" class="java.lang.String" itemvalue="md-placeholder" />
             <item index="10" class="java.lang.String" itemvalue="layout-margin" />
+            <item index="11" class="java.lang.String" itemvalue="md-row-select" />
+            <item index="12" class="java.lang.String" itemvalue="multiple" />
+            <item index="13" class="java.lang.String" itemvalue="md-order" />
+            <item index="14" class="java.lang.String" itemvalue="md-select-id" />
           </list>
         </value>
       </option>
@@ -24,7 +28,7 @@
     <inspection_tool class="HtmlUnknownTag" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="7">
+          <list size="8">
             <item index="0" class="java.lang.String" itemvalue="nobr" />
             <item index="1" class="java.lang.String" itemvalue="noembed" />
             <item index="2" class="java.lang.String" itemvalue="comment" />
@@ -32,10 +36,20 @@
             <item index="4" class="java.lang.String" itemvalue="embed" />
             <item index="5" class="java.lang.String" itemvalue="script" />
             <item index="6" class="java.lang.String" itemvalue="md-input-group" />
+            <item index="7" class="java.lang.String" itemvalue="md-table-container" />
           </list>
         </value>
       </option>
       <option name="myCustomValuesEnabled" value="true" />
+    </inspection_tool>
+    <inspection_tool class="PyPep8Inspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="E211" />
+          <option value="E201" />
+          <option value="E202" />
+        </list>
+      </option>
     </inspection_tool>
     <inspection_tool class="PyPep8NamingInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
       <option name="ignoredErrors">

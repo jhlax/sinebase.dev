@@ -1,31 +1,61 @@
 <div layout="row" layout-wrap>
-    <div flex="100" flex-gt-sm="70" flex-offset-gt-sm="15">
-        <md-button class="md-raised md-primary md-hue-2" ng-click="App.goto('/users/new')">New User
-        </md-button>
-    </div>
-    <md-whiteframe class="md-whiteframe-2dp" ng-repeat="user in Users.list"
-                   flex="100" flex-gt-sm="70" flex-offset-gt-sm="15" style="margin-bottom: 1em;">
-        <div layout="row" layout-wrap layout-padding>
-            <div flex>
-                <h4 ng-click="App.goto('/users/u/' + user.id)"
-                    style="cursor: pointer;">
-                    {{ user.name }}
-                </h4>
-
-                <h5>Email</h5>
-                <a href="mailto:{{ user.email }}">{{ user.email }}</a>
-            </div>
+    <md-whiteframe class="md-whiteframe-2dp " flex="100" flex-gt-sm="70" flex-offset-gt-sm="15">
+        <div layout-padding="">
+            <h1>Users</h1>
             <div>
-                <h5>ID</h5>
-                <code>
-                    {{ user.id }}
-                </code>
-
-                <h5>Level</h5>
-                <p>
-                    {{ user.level }}
-                </p>
+                <md-button class="md-raised md-primary" ng-click="App.goto('/users/new')">New User
+                </md-button>
             </div>
         </div>
     </md-whiteframe>
+
+    <div flex="100">&nbsp</div>
+
+    <md-table-container flex="100" flex-gt-sm="70" flex-offset-gt-sm="15">
+        <table md-table md-row-select multiple ng-model="Users.selected" md-progress="Users.promise">
+            <thead md-head md-order="'name'">
+            <tr md-row>
+                <th md-column>Name</th>
+                <th md-column>Email</th>
+                <th md-column>Level</th>
+                <th md-column>ID</th>
+            </tr>
+            </thead>
+            <tbody md-body>
+            <tr md-row md-select="user" md-select-id="user.name" ng-repeat="user in Users.list">
+                <td md-cell><a href="/users/u/{{user.id}}">{{ user.name }}</a></td>
+                <td md-cell><a href="mailto:{{user.email}}">{{ user.email }}</a></td>
+                <td md-cell><b style="font-variant: small-caps;">{{ user.level }}</b></td>
+                <td md-cell><code>{{ user.id }}</code></td>
+            </tr>
+            </tbody>
+        </table>
+    </md-table-container>
+
+    <!--<div ng-repeat="user in Users.list"-->
+    <!--flex="100" flex-gt-sm="70" flex-offset-gt-sm="15" style="margin-bottom: 1em;">-->
+    <!--<div layout="row" layout-wrap layout-padding>-->
+    <!--<div flex>-->
+    <!--<h4 ng-click="App.goto('/users/u/' + user.id)"-->
+    <!--style="cursor: pointer;">-->
+    <!--{{ user.name }}-->
+    <!--</h4>-->
+
+    <!--<h5>Email</h5>-->
+    <!--<a href="mailto:{{ user.email }}">{{ user.email }}</a>-->
+    <!--</div>-->
+    <!--<div>-->
+    <!--<h5>ID</h5>-->
+    <!--<code>-->
+    <!--{{ user.id }}-->
+    <!--</code>-->
+
+    <!--<h5>Level</h5>-->
+    <!--<p>-->
+    <!--{{ user.level }}-->
+    <!--</p>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+
 </div>

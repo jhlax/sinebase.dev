@@ -1,10 +1,11 @@
 const app = angular.module('sinebase_app', ['ngMaterial', 'ngMessages', 'ngRoute',
-    'ngStorage']);
+    'ngStorage', 'md.data.table']);
 
 app.config(function ($mdThemingProvider) {
     $mdThemingProvider.theme('default')
         .primaryPalette('blue')
-        .accentPalette('blue-grey');
+        .accentPalette('blue-grey')
+    ;
 });
 
 
@@ -35,28 +36,41 @@ app.config(function ($routeProvider) {
         .when('/', {
             templateUrl: '/static/partials/home.html',
             controller: 'home_ctl',
-            controllerAs: 'Home'
+            controllerAs: 'Home',
         })
         .when('/login', {
             templateUrl: '/static/partials/login.html',
             controller: 'login_ctl',
-            controllerAs: 'Login'
+            controllerAs: 'Login',
         })
         .when('/users', {
             templateUrl: '/static/partials/users.html',
             controller: 'users_ctl',
             controllerAs: 'Users'
-        }).when('/users/new', {
-        templateUrl: '/static/partials/user.html',
-        controller: 'user_ctl',
-        controllerAs: 'User'
-    }).when('/users/u/:user_id', {
-        templateUrl: '/static/partials/user.html',
-        controller: 'user_ctl',
-        controllerAs: 'User'
-    }).when('/whitepaper', {
-        templateUrl: '/static/partials/whitepaper.html',
-    });
+        })
+        .when('/users/new', {
+            templateUrl: '/static/partials/user.html',
+            controller: 'user_ctl',
+            controllerAs: 'User',
+        })
+        .when('/users/u/:user_id', {
+            templateUrl: '/static/partials/user.html',
+            controller: 'user_ctl',
+            controllerAs: 'User',
+        })
+        .when('/case/new', {
+            templateUrl: '/static/partials/case.html',
+            controller: 'case_ctl',
+            controllerAs: 'Case',
+        })
+        .when('/case/c/:case_id', {
+            templateUrl: '/static/partials/case.html',
+            controller: 'case_ctl',
+            controllerAs: 'Case',
+        })
+        .when('/whitepaper', {
+            templateUrl: '/static/partials/whitepaper.html',
+        });
 });
 
 
@@ -124,7 +138,7 @@ app.controller('app_ctl', ['Site', 'REST', '$location', '$localStorage', functio
      */
     let App = this;
     App.site = Site;
-    App.name = 'TBG CTS';
+    App.name = 'TBG CTS (DEV)';
 
     App.title = '';
     App.track = {
@@ -172,12 +186,17 @@ app.controller('home_ctl', ['Site', 'REST', function (Site, REST) {
     Home.Site = Site;
     Home.whitepaper = false;
 
-    Home.chview = function () {
-        Home.whitepaper = !Home.whitepaper;
+    Home.get_cases = function () {
+        REST.get('/api/cases').then(function suc(response) {
+            Home.cases = response.data.data;
+        }, function fail(response) {
+            Home.message = response.data.message;
+        });
     };
 
     Home.init = function () {
         Site.app_ctl.title = ': Home';
+        Home.get_cases();
     };
 
     Home.init();
@@ -217,8 +236,12 @@ app.controller('users_ctl', ['Site', 'REST', function (Site, REST) {
     let Users = this;
     Site.users_ctl = Users;
 
+    Users.selected = [];
+
     Users.update_list = function () {
-        REST.get('/api/users').then(function (res) {
+        let req = REST.get('/api/users');
+
+        req.then(function (res) {
             let data = res.data;
             if (data.result === 'success') {
                 Users.list = data.data;
@@ -226,6 +249,8 @@ app.controller('users_ctl', ['Site', 'REST', function (Site, REST) {
                 Users.list = [];
             }
         });
+
+        Users.promise = req.$promise;
     };
 
     Users.init = function () {
@@ -348,8 +373,35 @@ app.controller('user_ctl', ['Site', 'REST', '$routeParams', '$location',
                 User.endpoint = '/api/users/';
                 User.action = 'new';
                 User.is_edit = false;
+                Site.app_ctl.title = ': New User';
             }
         };
 
         User.init();
     }]);
+
+app.controller('case_ctl', ['Site', 'REST', '$routeParams', function (Site, REST, $routeParams) {
+    let Case = this;
+
+    Case.get_case = function () {
+        REST.get(Case.endpoint).then(function (res) {
+            Case.data = res.data.data;
+        });
+    };
+
+    Case.init = function () {
+        Site.app_ctl.title = ': Case';
+        if ('case_id' in $routeParams) {
+            Case.case_id = $routeParams.case_id;
+            Case.endpoint = '/api/cases/' + Case.case_id;
+            Case.is_edit = false;
+            Case.get_case();
+            Site.app_ctl.title = ': ' + Case.case_name + ' Case';
+        } else {
+            Case.endpoint = '/api/cases';
+            Case.is_edit = true;
+        }
+    };
+
+    Case.init();
+}]);

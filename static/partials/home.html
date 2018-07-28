@@ -46,15 +46,29 @@
 <!--</div>-->
 <!--</div>-->
 
-<div layout="row" layout-padding="" layout-wrap="">
-    <div flex="100">
-        <h1>Hello, {{ App.site.get_user().name }}.</h1>
-        <p>
-            You have <b>{{ Home.active_cases || 0 }} active case(s)</b> and <b>
-            {{ Home.pending_cases || 0 }} pending case(s)</b>.
-        </p>
-        <p>
-            
-        </p>
+<div layout="row" layout-wrap="">
+    <div flex="100" flex-gt-sm="70" flex-offset-gt-sm="15">
+        <div layout="row" flex="100">
+            <md-whiteframe class="md-whiteframe-2dp" flex="100">
+                <div layout-padding="">
+                    <h1>Hello, {{ App.site.get_user().name }}.</h1>
+                    <p>
+                        You have <b>{{ Home.cases.length || 0 }} active case(s)</b> and <b>
+                        {{ Home.pending_cases || 0 }} pending case(s)</b>.
+                        <a class="md-button" ng-click="App.goto('/case/new')">New Case</a>
+                    </p>
+                </div>
+            </md-whiteframe>
+        </div>
+    </div>
+    <div flex="100"><span>&nbsp</span></div>
+    <div flex="100" flex-gt-sm="70" flex-offset-gt-sm="15" layout="row" layout-wrap="">
+        <div flex="100" ng-repeat="case in Home.cases" ng-click="App.goto('/case/c/' + case._id)">
+            <span ng-repeat="(k, v) in case">
+                <b>{{ k }}</b>: {{ v || 'N/A' }}
+                <br>
+            </span>
+            <hr>
+        </div>
     </div>
 </div>

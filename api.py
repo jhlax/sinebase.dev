@@ -6,9 +6,12 @@ import bson.json_util
 import flask
 import flask_restful as rest
 import pymongo as mongo
+from pymongo.database import Database
 
 import config
 import functools
+
+from tbg_intake.logic.mvc import mongo as mvc
 
 client = mongo.MongoClient()
 db = client[config.APP_NAME]
@@ -24,6 +27,60 @@ def as_flask_data(o):
     :return: Flask-serializable structure
     """
     return json.loads(bson.json_util.dumps(o))
+
+
+def encode_id(document):
+    if isinstance(document, list):
+        for idx, doc in enumerate(document):
+            document[idx] = encode_id(doc)
+
+    else:
+        if '_id' in document:
+            document['_id'] = str(document['_id'])
+
+    return document
+
+
+def decode_id(document):
+    if isinstance(document, list):
+        for idx, doc in enumerate(document):
+            document[idx] = decode_id(document)
+
+    elif isinstance(document, str):
+        return bson.ObjectId(document)
+
+    else:
+        if '_id' in document:
+            if isinstance(document['_id'], str):
+                document['_id'] = bson.json_util.ObjectId(document['_id'])
+
+    return document
+
+
+def respond(document=None, message=None, error=None):
+    return {
+        'data': encode_id(document),
+        'message': message,
+        'error': error,
+    }
+
+
+def success(doc=None, message=None, error=None):
+    response = respond(doc, message, error)
+    response.update({
+        'result': 'success',
+        'message': message or 'Operation successful.',
+    })
+    return response
+
+
+def failure(doc=None, message=None, error=None):
+    response = respond(doc, message, error)
+    response.update({
+        'result': 'failure',
+        'error': error or 'An error occurred.'
+    })
+    return response
 
 
 def as_objectid(id):
@@ -47,7 +104,7 @@ def get_request():
 
 def make_success(data=None, message='Operation successful.'):
     response = {
-        'result':  'success',
+        'result': 'success',
         'message': message
     }
 
@@ -59,7 +116,7 @@ def make_success(data=None, message='Operation successful.'):
 
 def make_failure(data=None, message='Operation unsuccessful.'):
     response = {
-        'result':  'failure',
+        'result': 'failure',
         'message': message
     }
 
@@ -71,14 +128,14 @@ def make_failure(data=None, message='Operation unsuccessful.'):
 
 class Secure(object):
     LEVELS = {
-        'super':   3,
-        'admin':   2,
+        'super': 3,
+        'admin': 2,
         'regular': 1,
-        'viewer':  0,
+        'viewer': 0,
     }
 
     def check_level(self, level):
-        return Secure.LEVELS[level] < Secure.LEVELS[self.level]
+        return self.LEVELS[level] < self.LEVELS[self.level]
 
     def __init__(self, level='viewer'):
         self.level = level
@@ -115,8 +172,8 @@ class Users(rest.Resource):
     @staticmethod
     def user_dict(user):
         data = {
-            'id':    str(user['_id']),
-            'name':  user['name'],
+            'id': str(user['_id']),
+            'name': user['name'],
             'email': user['email'],
             'level': user['level'],
         }
@@ -127,7 +184,7 @@ class Users(rest.Resource):
     def auth_dict(user):
         data = {
             'token': user['token'],
-            'user':  Users.user_dict(user)
+            'user': Users.user_dict(user)
         }
 
         return data
@@ -145,10 +202,10 @@ class Users(rest.Resource):
             return make_failure('An account with that email already exists.')
 
         USERS.insert({
-            'name':     name,
-            'email':    email,
+            'name': name,
+            'email': email,
             'password': password,
-            'level':    level,
+            'level': level,
         })
 
         return make_success()
@@ -211,7 +268,7 @@ class Auth(rest.Resource):
         email, password = data['email'], data['password']
 
         cursor = USERS.find({
-            'email':    email.lower(),
+            'email': email.lower(),
             'password': password.lower(),
         })
 
@@ -222,10 +279,11 @@ class Auth(rest.Resource):
             timeout = arrow.utcnow().shift(weeks=2).timestamp
 
             user_new = USERS.find_one_and_update({
-                '_id': user['_id']},
+                '_id': user['_id']
+            },
                 {
                     '$set': {
-                        'token':   token.lower(),
+                        'token': token.lower(),
                         'timeout': timeout
                     }
                 }, return_document=mongo.ReturnDocument.AFTER
@@ -269,9 +327,11 @@ class Auth(rest.Resource):
             cursor = USERS.find({'token': token})
 
             if cursor.count():
-                USERS.update({'token': token}, {'$unset': {
-                    'token': '', 'timeout': ''
-                }})
+                USERS.update({'token': token}, {
+                    '$unset': {
+                        'token': '', 'timeout': ''
+                    }
+                })
 
                 return make_success(message='Logout successful.')
 
@@ -279,3 +339,42 @@ class Auth(rest.Resource):
                 return make_failure(message='No user with token exists.')
 
         return make_failure(message='No token given.')
+
+
+class Cases(rest.Resource, mvc.MongoController):
+    def __init__(self):
+        rest.Resource.__init__(self)
+        mvc.MongoController.__init__(self, mongo.MongoClient()['tbg_dev'],
+                                     'SLA1')
+
+    @Secure(level='viewer')
+    def get(self):
+        return success(self.read({}))
+
+    @Secure(level='admin')
+    def post(self):
+        data = get_request_data()
+        self.add_update(data)
+        return success()
+
+
+class Case(rest.Resource, mvc.MongoController):
+    def __init__(self):
+        rest.Resource.__init__(self)
+        mvc.MongoController.__init__(self, mongo.MongoClient()['tbg_dev'], 'SLA1')
+
+    @Secure()
+    def get(self, case_id):
+        return success(self.read({'_id': decode_id(case_id)}))
+
+    @Secure()
+    def post(self, case_id):
+        data = get_request_data()
+        result = self.add_update(data)
+        return success(result)
+
+    @Secure()
+    def delete(self, case_id):
+        case_id = decode_id(case_id)
+        result = self.provider.delete_one({'_id': case_id})
+        return success(result)
